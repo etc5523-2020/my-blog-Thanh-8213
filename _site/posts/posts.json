@@ -1,0 +1,34 @@
+[
+  {
+    "path": "posts/welcome/",
+    "title": "Welcome to My Blog",
+    "description": "Welcome to our new blog, My Blog. We hope you enjoy \nreading what we have to say!",
+    "author": [
+      {
+        "name": "Nora Jones",
+        "url": "https://example.com/norajones"
+      }
+    ],
+    "date": "2020-09-03",
+    "categories": [],
+    "preview": {},
+    "last_modified": "2020-09-03T23:36:55+10:00",
+    "input_file": {}
+  },
+  {
+    "path": "posts/blog_1/",
+    "title": "ETC5523 - Blog 1",
+    "description": "This is my work !",
+    "author": [
+      {
+        "name": "Nguyen Dang Thanh",
+        "url": {}
+      }
+    ],
+    "date": "2020-09-04",
+    "categories": [],
+    "preview": "posts/blog_1/blog_1_files/figure-html5/line-plot-1-1.png",
+    "last_modified": "2020-09-04T23:21:21+10:00",
+    "input_file": "blog_1.utf8.md"
+  }
+]

@@ -1,0 +1,164 @@
+---
+title: "ETC5523 - Blog 1"
+description: |
+  This is my work !
+author:
+- Nguyen Dang Thanh 
+date: "`r Sys.Date()`"
+output:
+  distill::distill_article:
+    self_contained: false
+bibliography: references.bib
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+library(tidyverse)
+library(DT)
+library(formattable)
+library(plotly)
+library(lubridate)
+library(kableExtra)
+library(sparkline)
+
+```
+
+## Introduction
+The coronavirus has ravaged the world for more eight months, impacting various countries. While every country impacted by COVID19 elected their own strategy to combat the global epidemic. This report will focus on the case of Ecuador, a South American country, which has an **interesting** trend.
+
+```{r data}
+data <- read_csv(here::here("data/owid-covid-data.csv"))
+
+data2 <- data %>% 
+  mutate(year = year(date)) %>%
+  filter(year > 2019, total_cases >0) 
+world <- data %>% filter(location == "World") %>%
+  mutate(year = year(date)) %>%
+  filter(year > 2019, total_cases >0) 
+
+ecua <- data %>% filter(location == "Ecuador") %>%
+  mutate(year = year(date)) %>%
+  filter(year > 2019, total_cases >0) 
+```
+
+## Data description
+In this report, data is collected from [Ourworldindata.org][@owidcoronavirus], which update data on the coronavirus pandemic daily. The data is downloaded on 1st of September, 2020. In this report, I will focus on the data of Ecuador, which contains data from 2020-01-01 to 2020-09-01. However, since the first recorded case in Ecuador was in 2020-03-01, the report will use data from that point onward.
+
+It is worth to notice that there are negative values in cases in the data, which according to the author, happen "when a country sends a correction to the ECDC, because it had previously overestimated the number of cases/deaths. Alternatively, large changes can sometimes (although rarely) be made to a country's entire time series if the ECDC decides (and has access to the necessary data) to correct values retrospectively."
+ 
+The data has several missing values, especially on 
+
+## Analysis
+
+### The situation of COVID 19 worldwide
+
+\@ref(tab:table-reactive) give information about the median age of COVID19 patience, total cases, total deaths, total cases and total deaths per million people. This table provides a broad overview of the situation of COVID 19 worldwide. 
+
+Readers can easily sort the table by clicking on the variables. On top of that, reader can search for the country that they interested in by typing in the top search bar.
+
+### The situation of Ecuador
+
+```{r table-reactive}
+table1 <- data2 %>%   group_by(location)%>%
+  summarise("Median age" = mean(median_age, na.rm = TRUE),
+            "Total cases" = sum(new_cases),
+            "Total death" = sum(new_deaths),
+            "Total cases per million" = round(mean(total_cases_per_million), digit = 2),
+            "Total deaths per million" = round(mean(total_deaths_per_million), digit = 2),
+            "Deathrate" = round(sum(new_deaths)/sum(new_cases)*100,2)
+            
+  ) %>%
+  rename(Location = location)
+datatable(table1, 
+          escape = FALSE,
+          caption = htmltools::tags$caption("Summary of COVID19", style = "color:#002366; font-size: 22px; text-align:center"),
+          extensions = 'Scroller', 
+          options = list(
+  deferRender = TRUE,
+  scrollY = 200,
+  scroller = TRUE
+
+))# %>% 
+ #   formatRound(columns = c("Location", 
+ #                           "Median age", 
+#                            "Total cases", 
+#                            "Total death", 
+#                            "Total cases per million", 
+#                            "Total deaths per million",
+#                            "Death rate (Percent)"), digits = 2)
+
+
+
+```
+
+Ecuador is a small South American country. It was hitted very hard by COVID in late April to early May, to the point that "bodies lied at home and in the streets of Guayaquil, Ecuador", as reported by [Whashingtonpost]. However, the data presented in table \@ref(tab:table-reactive) says otherwise. Although Ecuador did not perform very well with with a very high death rate at 5.77%, it is not the worst performing country. However, further research suggest that official's death toll maybe [much higher]. Thus, the author found this matter is interesting and required further research.
+
+Figure \@ref(fig:line-plot-1) shows the trend in total cases and deaths in Ecuador. It looks strange, with sudden bump and sudden drop in total cases. To study about this trend, the author draw \@ref(fig:plot2). It can clearly be seen that there are sudden increase of more than 10,000 cases in 2020-04-27. Even more strange, after the peak, the trend in new cases stay relatively the same at a much lower number toward the end of the period. It is very hard to believe nor explain. In my opinion, this trend can only be interpreted as mistake of authority in collecting data. It is also worth to notice that there are time when new cases are negative values, which according to the author of the dataset: "when a country sends a correction to the ECDC, because it had previously overestimated the number of cases/deaths". More details are presented in table \@ref(tab:table1), when sorted by new cases, there are 3 times that the numbers of new cases are negative values.
+
+From the previous findings, I have reason to believe that Ecuador's authority make a lot of mistakes in collecting data, and their data may be untrustworthy.
+
+```{r line-plot-1, fig.cap = "Number of cases and deaths in Ecuador"}
+
+pl1 <- ecua %>% select (date, total_cases, total_deaths) %>%
+  ggplot(aes(x = date))+
+  geom_line(aes(y = total_cases, color = "total_cases"))+
+  geom_line(aes( y = total_deaths, color = "total_death"))+
+  xlab("Date")+
+  ylab("Count (Person)")+
+  ggtitle("Ecuador's Total cases and total deaths")
+
+ggplotly(pl1)
+```
+
+```{r plot2, fig.cap = "Ecuador's new daily cases and new deaths"}
+pl2 <- ecua %>% select (date, new_cases, new_deaths) %>%
+  ggplot(aes(x = date))+
+  geom_line(aes(y = new_cases, color = "new_cases"))+
+  geom_line(aes( y = new_deaths, color = "new_death"))+
+  xlab("Date")+
+  ylab("Count (Person)")+
+  ggtitle("Ecuador's new daily cases and new daily deaths")
+ggplotly(pl2)
+
+```
+
+
+```{r table1}
+
+ecua %>% select(date, total_cases, total_deaths,new_cases,new_deaths) %>%
+  datatable(, 
+          escape = FALSE,
+          caption = htmltools::tags$caption("Ecuador COVID 19", style = "color:#002366; font-size: 22px; text-align:center"),
+          extensions = 'Scroller', 
+          options = list(
+  deferRender = TRUE,
+  scrollY = 200,
+  scroller = TRUE
+
+))
+```
+
+
+
+# References
+
+Packages used in this report:
+
+- plotly [@plotly]
+
+- tidyverse [@tidyverse]
+
+- lubridate [@lubridate] 
+
+- kableExtra [@kableExtra]
+
+- DT [@DT]
+
+- formattable [@formattable]
+
+- sparkline [@sparkline]
+
+[Our world in data]:https://ourworldindata.org/coronavirus
+[Whashingtonpost]:https://www.washingtonpost.com/world/the_americas/coronavirus-guayaquil-ecuador-bodies-corpses-streets/2020/04/03/79c786c8-7522-11ea-ad9b-254ec99993bc_story.html
+[much higher]: https://www.nytimes.com/2020/04/23/world/americas/ecuador-deaths-coronavirus.html?action=click&module=RelatedLinks&pgtype=Article
