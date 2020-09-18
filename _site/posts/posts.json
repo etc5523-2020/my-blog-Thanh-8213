@@ -1,5 +1,37 @@
 [
   {
+    "path": "posts/blog_1/",
+    "title": "ETC5523 - Blog 1",
+    "description": "This is my work !",
+    "author": [
+      {
+        "name": "Nguyen Dang Thanh",
+        "url": {}
+      }
+    ],
+    "date": "2020-09-04",
+    "categories": [],
+    "preview": {},
+    "last_modified": "2020-09-04T23:47:38+10:00",
+    "input_file": {}
+  },
+  {
+    "path": "posts/blog_2/",
+    "title": "ETC5523 - Blog 1",
+    "description": "This is my work !",
+    "author": [
+      {
+        "name": "Nguyen Dang Thanh",
+        "url": {}
+      }
+    ],
+    "date": "2020-09-04",
+    "categories": [],
+    "preview": {},
+    "last_modified": "2020-09-04T23:47:38+10:00",
+    "input_file": {}
+  },
+  {
     "path": "posts/welcome/",
     "title": "Welcome to My Blog",
     "description": "Welcome to our new blog, My Blog. We hope you enjoy \nreading what we have to say!",
@@ -14,21 +46,5 @@
     "preview": {},
     "last_modified": "2020-09-03T23:36:55+10:00",
     "input_file": {}
-  },
-  {
-    "path": "posts/blog_1/",
-    "title": "ETC5523 - Blog 1",
-    "description": "This is my work !",
-    "author": [
-      {
-        "name": "Nguyen Dang Thanh",
-        "url": {}
-      }
-    ],
-    "date": "2020-09-04",
-    "categories": [],
-    "preview": {},
-    "last_modified": "2020-09-04T23:47:34+10:00",
-    "input_file": "blog_1.utf8.md"
   }
 ]

@@ -1,0 +1,141 @@
+---
+title: "ETC5523 - Blog 2"
+description: |
+  Kazakhstan, a success story turned into a failure
+author:
+- Nguyen Dang Thanh 
+date: "`r Sys.Date()`"
+output:
+  distill::distill_article:
+    self_contained: false
+bibliography: references.bib
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+library(tidyverse)
+library(DT)
+library(formattable)
+library(plotly)
+library(lubridate)
+library(kableExtra)
+library(sparkline)
+
+```
+
+## Introduction
+The coronavirus has ravaged the world for more eight months, impacting various countries. While every country impacted by COVID19 elected their own strategy to combat the global epidemic. This report will focus on the case of Ecuador, a South American country, which has an **interesting** trend.
+
+```{r data}
+data <- read_csv(here::here("data/owid-covid-data.csv"))
+
+data2 <- data %>% 
+  mutate(year = year(date)) %>%
+  filter(year > 2019, total_cases >0,
+         location!= "World") 
+world <- data %>% filter(location == "World") %>%
+  mutate(year = year(date)) %>%
+  filter(year > 2019, total_cases >0) 
+
+kazakh <- data %>% filter(location == "Kazakhstan") %>%
+  mutate(year = year(date)) %>%
+  filter(year > 2019, total_cases >0) 
+```
+
+## Data description
+In this report, data is collected from [Ourworldindata.org][@owidcoronavirus], which update data on the coronavirus pandemic daily. The data is downloaded on 1st of September, 2020. In this report, I will focus on the data of Ecuador, which contains data from 2020-01-01 to 2020-09-01. However, since the first recorded case in Ecuador was in 2020-03-01, the report will use data from that point onward.
+
+It is worth to notice that there are negative values in cases in the data, which according to the author, happen "when a country sends a correction to the ECDC, because it had previously overestimated the number of cases/deaths. Alternatively, large changes can sometimes (although rarely) be made to a country's entire time series if the ECDC decides (and has access to the necessary data) to correct values retrospectively."
+ 
+## Analysis
+
+### The situation of COVID 19 in Asia
+
+```{r}
+
+table1 <- data2 %>% filter(continent == "Asia") %>%
+  group_by(location)%>%
+  summarise("Median age" = mean(median_age, na.rm = TRUE),
+            "Total cases" = sum(new_cases),
+            "Total death" = sum(new_deaths),
+            "Total cases per million" = round(mean(total_cases_per_million), digit = 2),
+            "Total deaths per million" = round(mean(total_deaths_per_million), digit = 2),
+            "Deathrate" = round(sum(new_deaths)/sum(new_cases)*100,2)
+            
+  ) %>%
+  rename(Country = location)
+datatable(table1, 
+          escape = FALSE,
+          caption = htmltools::tags$caption("Summary of COVID19 in Asia", style = "color:#002366; font-size: 22px; text-align:center"),
+          extensions = 'Scroller', 
+          options = list(
+  deferRender = TRUE,
+  scrollY = 200,
+  scroller = TRUE
+
+))
+
+
+```
+### The situation of Kazakhstan
+
+The great pandemic has been rampaging the world, and Kazakhstan, a former Soviet states, is no exception. Looking back in time, the country performed very well in containing the virus. It was praised as [an anti-pandemic model for Central Asia]. The government acted quickly with strict public distancing measurement put into place early on. 
+
+Figure \@ref(fig:line-plot-1) shows that before July, the country performed well, with new cases almost the same with world's average. However, things turned dark in the start of July, with ten of thousands of cases recorded in one day, and many suspected cases labeled as ["unspecified pneumonia"]
+
+On July 5, the country returned to lockdown state, the first country in the world to enter a second nationwide lockdown. The lockdown restricted public gatherings and bans family and holiday gatherings. Citizens over 65 are expected to stay home, but others are allowed to exercise outdoors on their own. 
+
+```{r line-plot-1, fig.cap = "Kazakhstan new cases per million of population, compare to world average"}
+
+plot_dat <- full_join(kazakh, world)
+pl1 <- plot_dat %>% 
+  ggplot(aes(x = date)) +
+  geom_line(aes(y = new_cases_per_million, color = location))+
+  xlab("Date")+
+  ylab("Person/ Million People")+
+  ggtitle("Kazakhstan total cases per million of population ")
+
+ggplotly(pl1)
+```
+
+The COVID and lockdown heavily affect to economy of Kazakhstan. According to IMF and as illustrated in figure \@ref(fig:plot2), GDP growth rate of Kazakhstan is predicted to be -3 percent, the lowest from 2010.
+
+```{r plot2, fig.cap="Kazakhstan GDP growth rate from 2010, predicted GDP for 2020 and 2021" }
+library(readxl)
+GDP <- read_excel(here::here("data/imf-gdp-data.xls")) %>%
+  rename("country" ="Real GDP growth (Annual percent change)") %>%
+  pivot_longer(cols = -country, names_to = "year", values_to = "GDP") 
+
+GDP_kazakh <- GDP %>% filter(country == "Kazakhstan", year > 2009) %>%
+  mutate(GDP = as.numeric(GDP))
+
+gdp <- ggplot(GDP_kazakh, aes(x = year, y = GDP))+
+  geom_col(fill =  "#00FFFF", alpha = 0.8)+
+  ggtitle("Kazakhstan GDP growth rate from 2010-2021")
+ggplotly(gdp)
+
+```
+
+
+# References
+
+Packages used in this report:
+
+- plotly [@plotly]
+
+- tidyverse [@tidyverse]
+
+- lubridate [@lubridate] 
+
+- kableExtra [@kableExtra]
+
+- DT [@DT]
+
+- formattable [@formattable]
+
+- sparkline [@sparkline]
+
+[Our world in data]:https://ourworldindata.org/coronavirus
+[an anti-pandemic model for Central Asia]: https://www.washingtontimes.com/news/2020/may/20/kazakhstan-is-an-anti-pandemic-model-for-central-a/
+["unspecified pneumonia"]: https://theconversation.com/coronavirus-kazakhstan-denies-unknown-pneumonia-reports-but-has-imposed-second-national-lockdown-142523
