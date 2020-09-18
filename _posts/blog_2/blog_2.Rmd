@@ -80,6 +80,7 @@ datatable(table1,
 ```
 ### The situation of Kazakhstan
 
+#### Kazakhstan, from a good example, turned into a failure
 The great pandemic has been rampaging the world, and Kazakhstan, a former Soviet states, is no exception. Looking back in time, the country performed very well in containing the virus. It was praised as [an anti-pandemic model for Central Asia]. The government acted quickly with strict public distancing measurement put into place early on. 
 
 Figure \@ref(fig:line-plot-1) shows that before July, the country performed well, with new cases almost the same with world's average. However, things turned dark in the start of July, with ten of thousands of cases recorded in one day, and many suspected cases labeled as ["unspecified pneumonia"]
@@ -99,7 +100,8 @@ pl1 <- plot_dat %>%
 ggplotly(pl1)
 ```
 
-The COVID and lockdown heavily affect to economy of Kazakhstan. According to IMF and as illustrated in figure \@ref(fig:plot2), GDP growth rate of Kazakhstan is predicted to be -3 percent, the lowest from 2010.
+#### Economic impact on Kazakhstan
+The COVID and lockdown heavily affect to economy of Kazakhstan. According to IMF and as illustrated in figure \@ref(fig:plot2), GDP growth rate of Kazakhstan is predicted to be -3 percent, the lowest from 2010. However, the data used to make this graph may not have addressed the impact of the second nationwide lockdown, which mwill have large impact on the economy.
 
 ```{r plot2, fig.cap="Kazakhstan GDP growth rate from 2010, predicted GDP for 2020 and 2021" }
 library(readxl)
@@ -112,7 +114,9 @@ GDP_kazakh <- GDP %>% filter(country == "Kazakhstan", year > 2009) %>%
 
 gdp <- ggplot(GDP_kazakh, aes(x = year, y = GDP))+
   geom_col(fill =  "#00FFFF", alpha = 0.8)+
-  ggtitle("Kazakhstan GDP growth rate from 2010-2021")
+  ggtitle("Kazakhstan GDP growth rate from 2010-2021")+
+  xlab("Year")+
+  ylab("GDP Growth rate")
 ggplotly(gdp)
 
 ```
