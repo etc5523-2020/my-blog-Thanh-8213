@@ -1,5 +1,21 @@
 [
   {
+    "path": "posts/2020-10-15-blog-3/",
+    "title": "Blog 3",
+    "description": "Shiny assessment self-reflection",
+    "author": [
+      {
+        "name": "Nguyen Dang Thanh",
+        "url": {}
+      }
+    ],
+    "date": "2020-10-15",
+    "categories": [],
+    "preview": {},
+    "last_modified": "2020-10-15T23:58:46+11:00",
+    "input_file": "blog-3.utf8.md"
+  },
+  {
     "path": "posts/blog_2/",
     "title": "ETC5523 - Blog 2",
     "description": "Kazakhstan, a success story turned into a failure",

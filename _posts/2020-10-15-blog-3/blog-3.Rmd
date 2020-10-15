@@ -1,0 +1,61 @@
+---
+title: "Blog 3"
+description: |
+  Shiny assessment self-reflection
+author:
+  - name: Nguyen Dang Thanh
+date: 10-15-2020
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## About my shiny application
+
+My dashboard shows recent development of the COVID19 pandemic.The data is downloaded from [Johns Hopkins CSSE](https://github.com/CSSEGISandData/COVID-19). The data set contains the data of the pandemic from 22/01/2020 to 06/10/2020. The data is displayed in a map, a summary table and plots.
+
+The dashboard is heavily influenced by the work of [Christoph Schoenenberger](https://chschoenenberger.shinyapps.io/covid19_dashboard). In fact, I tried to mimic his app and even used some of his code for better presentation of my app.
+
+
+## Self-reflection 
+
+Thank you Emi and teaching staffs, this is my favorite part (thanks to my anxiety)
+
+### What did I do well?
+
+From my point of view, I have done the shiny app pretty well. I have to admit that the app is complicate for a new user like me, and being able to build it is an achievement.  
+
+1. I managed to draw the leaflet map. It is the first time I draw a world map with leaflet. Not to mention I successfully draw the bubble.  
+
+2. I managed to write the About part in Shiny. Although it is a painful experience, I learned a lot about Shiny text and HTML.  
+
+
+
+
+
+### What are the points I can improve  
+There are a few points that I can improve in the app.  
+
+1. The map and plots can be more appealing with different color and theme. More text to explain the plots are needed.  
+
+2. I can improve the map by fixing the location of the bubble (Some countries are misrepresented on the map).  
+
+3. I can improve the interaction (namely plotly-click) to have actual meaningful impact. The current reaction is terrible. It is not suitable there, and need to improved a lot (as it is very low quality). I expect the plotly click will give detailed information (and a small reaction).   
+
+
+### The things that I want to add
+
+My ultimate goal for the app is to be as good as that of Christoph Schoenenberger. Therefore, there are various feature that I want to add:  
+
+1. Add layers on the map. Different layers for different type of cases are the next reasonable step for the map. For example, user can choose to see a map for death cases or recovered cases. I saw it in Christoph Schoenenberger's app but still need to figure the related leaflet.  
+
+2. Add more reaction. I want to add reaction between the map and the data table. For example click on the table and the map jump the the that country's place and vice versa.  
+
+###  What are some things that I like to add that cannot be done yet due to limitation in data or technology?
+
+There is nothing. Shiny is very new to me so I haven't exploited it the fullest. From my point of view, all the things I want to improve/ add can be done by shiny.
+
