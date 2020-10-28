@@ -1,0 +1,90 @@
+---
+title: "Blog 4"
+description: |
+  Peer review - R package
+author:
+  - name: Nguyen Dang Thanh 
+    url: https://example.com/norajones
+date: "`r Sys.Date()`"
+output: 
+  distill::distill_article:
+    self_contained: false
+
+---
+
+## Overview  
+This blogpost is created to review the R package created by my peer Junhao Wang. The package name is `mypk` and can be accessed [here](https://github.com/etc5523-2020/r-package-assessment-Junhao). The goal of the package is providing functions to simplify the codes in the shiny app.  
+The package contains no dataset and 4 functions:  
+- `launch_app`  
+- `uifunc`  
+- `selectthem`  
+- `servfunc`  
+
+## What did I think this package would do? Did it do it?   
+
+### What I expect from the package
+What I expected the package would do:  
+- It can be easily installed
+- It will launch a shiny app fluently without require any debug.
+- It has properly documented functions.
+
+### What the package gives me:
+
+#### Installation process
+I tried to install the package using the method listed in the README.md on Github:
+``` r
+install.packages("mypk")
+```
+The code did not run and I got an error:
+`Warning in install.packages: package ‘mypk’ is not available for this version of R`  
+Therefore, I need to get to the github repo and downloaded the package and install it on my computer.  
+To sum up, it is hard to install the package and the README.md is not very helpful.
+
+#### Launching the shiny app  
+I used the `launch_app()` function to directly lauch the app. An error occured stating that function object `server` not found. The app failed to run. Leaving it here should be the logical choice, but I decided instead to dive in to the code and try to debug.  
+The error was from the server part of the application. The dataset used in the process is not defined as the function used to create the dataset is not properly called. I have to debug it manually. Detailed information is presented in later step.  
+Moreover, the app required two packages: `coronavirus` and `shinythemes`, which are not listed in dependencies part of the DESCRIPTION file.
+Overall, the application is not launched successfully and required some debug to run.
+
+### Checking the functions
+- All the functions are poorly documented. It took a fair chunk of my time to analyze and understand how the functions work. There are no description of what a function does, or what is the expected output. Worse, all the function is documented in only 1 R file, which makes understanding and debugging them even harder. 
+- One large bug lie in the code used to process the data for the server function (mentioned above). The function is complex without any comment on how it work nor what is the input/output. 
+
+In conclusion, the package did not run properly and require a fair amount of debugging to run. The functions are poorly documented. README.md is minimalist and barely useful. DESCRIPTION file missed some dependencies.
+
+## Recommendations
+### Recommendation for the code:
+After reviewing the package, I have some recommendation for the author:  
+
+- I would suggest the author to use seperate files for documenting functions. It will be easier for the reader and the author himself to manage and debug.  
+
+- As the shiny error is due to data-reading from a function, it would be a good idea to use a separate data folder to store the data needed in the package.  
+
+- The README, DESCRIPTION and documentation of functions need more work. The structure of said files can be learned from ETC5523 lecture and tutorial 7,8. For example, listing of the dependencies packages.  
+
+- More diverse tests that cover a reasonable range of inputs and conditions is recommended. I would advice to add more situation for the test.  
+
+### Recommendation for the shiny application:
+- The second plot (output$line) position should be changed as it is barely visible on my local computer. Putting it on a new Fluid Row is adviced. 
+
+
+## What I have learned from the package
+From the package, I learned the following things:  
+- Proper documentation is essential for packages. I will be more careful and thoughtful while document my functions and packages.  
+- Data and functions should be seperated in different files, so that when problems appear, it is easier to check/debug.
+
+
+
+## Package Review
+#### Documentation
+The package includes all the following forms of documentation:  
+- [X] **Installation instructions:** for the package is found in README  
+- [ ] **Vignette(s)** demonstrating major functionality that runs successfully locally  
+- [ ] **Function Documentation:** for all exported functions in R help  
+- [ ] **Examples** for all exported functions in R Help that run successfully locally
+
+#### Functionality  
+- [ ] **Installation:** Installation succeeds as documented.  
+- [ ] **Functionality:** Any functional claims of the software been confirmed.  
+- [X] **Automated tests:** Unit tests cover essential functions of the package
+and a reasonable range of inputs and conditions. All tests pass on the local machine.

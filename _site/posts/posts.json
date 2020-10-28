@@ -1,5 +1,21 @@
 [
   {
+    "path": "posts/blog_4/",
+    "title": "Blog 4",
+    "description": "Peer review - R package",
+    "author": [
+      {
+        "name": "Nguyen Dang Thanh",
+        "url": "https://example.com/norajones"
+      }
+    ],
+    "date": "2020-10-29",
+    "categories": [],
+    "preview": {},
+    "last_modified": "2020-10-29T01:09:40+11:00",
+    "input_file": "blog_4.utf8.md"
+  },
+  {
     "path": "posts/2020-10-15-blog-3/",
     "title": "Blog 3",
     "description": "Shiny assessment self-reflection",
