@@ -77,11 +77,12 @@ From the package, I learned the following things:
 
 ## Package Review
 #### Documentation
-The package includes all the following forms of documentation:  
-- [X] **Installation instructions:** for the package is found in README  
-- [ ] **Vignette(s)** demonstrating major functionality that runs successfully locally  
-- [ ] **Function Documentation:** for all exported functions in R help  
-- [ ] **Examples** for all exported functions in R Help that run successfully locally
+The package includes all the following forms of documentation  
+
+- [X] **Installation instructions:** for the package is found in README.  
+- [ ] **Vignette(s)** demonstrating major functionality that runs successfully locally.  
+- [ ] **Function Documentation:** for all exported functions in R help.  
+- [ ] **Examples** for all exported functions in R Help that run successfully locally.
 
 #### Functionality  
 - [ ] **Installation:** Installation succeeds as documented.  
